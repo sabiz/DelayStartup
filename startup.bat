@@ -5,7 +5,7 @@ REM  v 0.0.1
 REM --------------------------------------------
 setlocal
 
-set APP_LOCATION=%SystemDrive%\Users\%USERNAME%\app
+set APP_LOCATION=%SystemDrive%\Users\%USERNAME%\startup
 set STARTUP_PATH=%SystemDrive%\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 set SELF_FILE=%0
 set SELF_FILE_NAME=%~nx0
@@ -30,7 +30,7 @@ if %ERRORLEVEL% neq 0 (
 timeout 60
 cd %APP_LOCATION%
 for %%a in (*.lnk) do (
-  start %%a
+  start cmd /C start %%a
   timeout 30 > nul
 )
 endlocal
