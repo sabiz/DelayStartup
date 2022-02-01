@@ -41,7 +41,7 @@ for %%a in (*.lnk) do (
         echo waitng 60 sec... [%%~na]
         timeout 60 > nul
     )
-    start cmd /C tart %%a
+    start cmd /C start %%a
     set /a idx=!idx!+1
 )
 endlocal
