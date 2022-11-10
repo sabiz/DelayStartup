@@ -9,14 +9,14 @@ echo.
 
 setlocal enabledelayedexpansion
 
-set APP_LOCATION=%SystemDrive%\Users\%USERNAME%\startup
-set STARTUP_PATH=%SystemDrive%\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+set APP_LOCATION=%USERPROFILE%\startup
+set STARTUP_PATH=%APPDATA%\Microsoft\Windows\Start Menu\Programs\StartUp
 set SELF_FILE=%0
 set SELF_FILE_NAME=%~nx0
 
 if not exist "%STARTUP_PATH%\%SELF_FILE_NAME%" (
     echo Install Startup bat...
-    copy /Y "%SELF_FILE_NAME%" "%STARTUP_PATH%\%SELF_FILE_NAME%" > nul
+    copy /Y %SELF_FILE_NAME% "%STARTUP_PATH%\%SELF_FILE_NAME%" > nul
     echo Install done.
     pause
     exit 0
@@ -25,14 +25,14 @@ if not exist "%STARTUP_PATH%\%SELF_FILE_NAME%" (
 fc %SELF_FILE% "%STARTUP_PATH%\%SELF_FILE_NAME%" > nul
 if %ERRORLEVEL% neq 0 (
     echo Update Startup bat...
-    copy /Y "%SELF_FILE_NAME%" "%STARTUP_PATH%\%SELF_FILE_NAME%" > nul
+    copy /Y %SELF_FILE% "%STARTUP_PATH%\%SELF_FILE_NAME%" > nul
     echo Install done.
     pause
     exit 0
 )
 
 set idx=1
-cd %APP_LOCATION%
+cd "%APP_LOCATION%"
 for %%a in (*.lnk) do (
     if !idx! gtr 1 (
         echo waitng 30 sec... [%%~na]
@@ -41,7 +41,7 @@ for %%a in (*.lnk) do (
         echo waitng 60 sec... [%%~na]
         timeout 60 > nul
     )
-    start cmd /C start %%a
+    start cmd /C start "" """%%a"""
     set /a idx=!idx!+1
 )
 endlocal
